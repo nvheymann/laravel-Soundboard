@@ -52,7 +52,12 @@ class OwnSoundsController extends Controller
 
         if(isset($request->Play) && !is_null($request->Play))
         {
-            echo shell_exec('mplayer ./sound/Test.mp3');die();
+            $url = 'http://127.0.0.1:5000/api/play/'.$request->Play;
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_HTTPGET, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_exec($ch);
+            curl_close($ch);
 
 
         }
