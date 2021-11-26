@@ -16,8 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\SoundsController::class, 'index'])->name('sounds');
 
+Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+Route::post('/profile', [\App\Http\Controllers\ProfileController::class, 'update']);
+
 Route::get('/own-Sounds', [\App\Http\Controllers\OwnSoundsController::class, 'index'])->name('ownsounds');
 Route::post('/own-Sounds', [\App\Http\Controllers\OwnSoundsController::class, 'addSound']);
+
+Route::post('/play-Sound',[\App\Http\Controllers\PlaySoundController::class,'play']);
+Route::get('/play-Sound',[\App\Http\Controllers\PlaySoundController::class,'index'])->name('play-Sound');
 
 Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'index'])->name('login');
 

@@ -20,6 +20,7 @@ class Sounds extends Migration
             $table->string('sound_title');
             $table->string('sound_img');
             $table->string('sound');
+            $table->integer('for_all');
 
             $table->foreignId('user_id')->constrained('users');
 

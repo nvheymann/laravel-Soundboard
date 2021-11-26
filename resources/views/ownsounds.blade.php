@@ -43,33 +43,43 @@
 
                             <div class="col">
                                 <label for="sound_title">Sound Title</label>
-                                <input type="text" class="form-control" placeholder="Sound Title" id="sound_title" name="sound_title">
+                                <input type="text" class="form-control" placeholder="Sound Title" id="sound_title" name="sound_title" required>
                             </div>
 
                             <div class="col">
-                                <label for="file">Sound Bild</label>
+                                <label for="file">Sound Bild (Nicht Zwingend)</label>
                                 <input type="file" class="form-control" id="sound_bild" name="sound_bild">
                             </div>
 
                         </div>
-                        <div class="form-row">
+
+                        <div class="form-row mt-5">
 
                             <div class="col">
                                 <label for="file">Sound</label>
-                                <input type="file" class="form-control" id="sound" name="sound">
+                                <input type="file" class="form-control" id="sound" name="sound" required>
                             </div>
 
+
                         </div>
-                        <button type="submit"  name="Add" value="submit" class="btn btn-primary">Submit</button>
+
+                        <div class="form-row mt-5">
+                            <div class="col ml-5">
+                                <input type="checkbox" class="form-check-input" id="for_all" name="for_all">
+                                <label class="form-check-label" for="for_all">Diesen Sound für alle freigeben</label>
+                            </div>
+                        </div>
+
+
+                        <div class="container mt-5 d-flex justify-content-center">
+                            <button type="submit"  name="Add" value="submit" class="btn btn-primary mr-2">Submit</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </form>
 
 
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Send message</button>
-                </div>
             </div>
         </div>
     </div>
@@ -83,7 +93,7 @@
                 @foreach($data as $link)
 
                     <div class="mt-5 ml-3">
-                        <img class="circular--square" src="img/icon-profile.png" alt="Sound-card-profile-image" height="72" width="72"/>
+                        <img class="circular--square" src="{{$link['user_img']}}" alt="Sound-card-profile-image" height="72" width="72"/>
                         <div class="card m-3 sound-card" style="width: 15rem; ">
 
                             <img class="card-img-top p-1" src="{{$link['sound_img']}}" alt="Card image cap"  height="150">
@@ -91,13 +101,16 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{$link['sound_title']}}</h5>
                                 <p class="card-text">
-                                    Author: Nico<br>
+                                    Author: {{$link['name']}}<br>
                                     Category: Lustig, Test
                                 </p>
-                                <div class="container text-center" >
-                                    <button href="#" class="btn btn-primary">Edit</button>
-                                    <button href="#" class="btn btn-primary">Play</button>
-                                </div>
+                                <form action="{{Route('ownsounds')}}" method="post">
+                                    @csrf
+                                    <div class="container text-center">
+                                        <button href="#" class="btn btn-primary" name="Delete" value="{{$link['sound']}}">Delete</button>
+                                        <button href="#" class="btn btn-primary" name="Play" value="{{$link['sound']}}">Play</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

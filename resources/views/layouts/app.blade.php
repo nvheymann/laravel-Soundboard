@@ -38,8 +38,8 @@
                         <a class="nav-link text-white" href="{{Route('ownsounds')}}"><h4 class="sound-nav-links">Own Sounds</h4></a>
                     </li>
                     <li class="nav-item pl-4">
-                        <a class="nav-link text-white" href="#">
-                            <h4 class="sound-nav-links">Anleitung</h4>
+                        <a class="nav-link text-white" href="{{Route('profile')}}">
+                            <h4 class="sound-nav-links">Profil</h4>
                         </a>
                     </li>
                 </ul>

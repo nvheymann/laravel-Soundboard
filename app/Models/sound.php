@@ -19,5 +19,6 @@ class sound extends Model
         'sound',
         'sound_img',
         'user_id',
+        'for_all',
     ];
 }

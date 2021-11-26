@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use robertogallea\LaravelPython\Services\LaravelPython;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
+use function Psy\debug;
 
 
 class OwnSoundsController extends Controller
@@ -18,7 +22,13 @@ class OwnSoundsController extends Controller
         try {
             $user_id = Auth::user()->id;
 
-            $users = DB::select('select * from sounds where user_id = :id', ['id' => $user_id]);
+            $users = DB::table('sounds')
+                ->select('*')
+                ->join('users','sounds.user_id','=','users.id')
+                ->where('user_id','=',$user_id)
+                ->get()->toArray();
+
+
 
             $users = array_map(function ($value) {
                 return (array)$value;
@@ -35,19 +45,42 @@ class OwnSoundsController extends Controller
     public function addSound(Request $request)
     {
 
-        $files = $this->moveFiles($request->sound_title);
 
-        sound::create([
-            'sound_title' => $request->sound_title,
-            'sound' => $files['sound'],
-            'sound_img' => $files['sound_img'],
-            'user_id' => Auth::user()->id,
-        ]);
+        if(isset($request->Delete) && !is_null($request->Delete)){
+            dd("Delete");
+        }
 
+        if(isset($request->Play) && !is_null($request->Play))
+        {
+            echo shell_exec('mplayer ./sound/Test.mp3');die();
+
+
+        }
+
+        if(isset($request->Add) && !is_null($request->Add)) {
+
+
+            if (is_null($request->for_all)) {
+                $all = 0;
+            } else {
+                $all = 1;
+            }
+            $files = $this->moveFiles($request->sound_title);
+
+
+            sound::create([
+                'sound_title' => $request->sound_title,
+                'sound' => $files['sound'],
+                'sound_img' => $files['sound_img'],
+                'for_all' => $all,
+                'user_id' => Auth::user()->id,
+            ]);
+        }
 
 
         return Redirect::back();
     }
+
 
     public function moveFiles($sound_title)
     {
