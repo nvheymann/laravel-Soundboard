@@ -33,10 +33,13 @@
                                     Author: {{$link['name']}}<br>
 
                                 </p>
-                                <div class="container text-center" >
-                                    <button href="#" class="btn btn-primary">Edit</button>
-                                    <button href="#" class="btn btn-primary">Play</button>
-                                </div>
+                                <form action="{{Route('ownsounds')}}" method="post">
+                                    @csrf
+                                    <div class="container text-center">
+                                        <button href="#" class="btn btn-primary" name="Delete" value="{{$link['sound']}}">Delete</button>
+                                        <button href="#" class="btn btn-primary" name="Play" value="{{$link['sound']}}">Play</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

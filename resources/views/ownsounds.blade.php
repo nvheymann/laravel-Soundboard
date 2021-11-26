@@ -102,7 +102,6 @@
                                 <h5 class="card-title">{{$link['sound_title']}}</h5>
                                 <p class="card-text">
                                     Author: {{$link['name']}}<br>
-                                    Category: Lustig, Test
                                 </p>
                                 <form action="{{Route('ownsounds')}}" method="post">
                                     @csrf
